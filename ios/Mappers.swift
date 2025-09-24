@@ -38,7 +38,7 @@ class Mappers {
         }
 
         guard let paymentAttemptId = paymentParameters["paymentAttemptId"] as? String else {
-            return .failure(.missingIdempotencyKey)
+            return .failure(.missingPaymentAttemptId)
         }
 
         let paymentParams = PaymentParameters(paymentAttemptID: paymentAttemptId, amountMoney: amountMoney, processingMode: processingMode)
@@ -243,7 +243,7 @@ extension SquareMobilePaymentsSDK.ReaderUnavailableReason {
 
 enum PaymentParametersError: Error {
     case missingAmount
-    case missingIdempotencyKey
+    case missingPaymentAttemptId
     case missingProcessingMode
 }
 
