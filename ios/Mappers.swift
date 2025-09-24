@@ -31,13 +31,14 @@ class Mappers {
               let amountMoney = Money(moneyParam) else {
             return .failure(.missingAmount)
         }
-        guard let idempotencyKey = paymentParameters["idempotencyKey"] as? String else {
-            return .failure(.missingIdempotencyKey)
+
+        guard let processingModeInt = paymentParameters["processingMode"] as? Int,
+              let processingMode = ProcessingMode(rawValue: processingModeInt) else {
+            return .failure(.missingProcessingMode)
         }
 
-        guard let processingModeEnum = paymentParameters["processingMode"] as? Int,
-              let processingMode = ProcessingMode(rawValue: processingModeEnum) else {
-            return .failure(.missingProcessingMode)
+        guard let idempotencyKey = paymentParameters["idempotencyKey"] as? String else {
+            return .failure(.missingIdempotencyKey)
         }
 
         let paymentParams = PaymentParameters(idempotencyKey: idempotencyKey, amountMoney: amountMoney, processingMode: processingMode)
